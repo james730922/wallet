@@ -1,0 +1,68 @@
+﻿service:
+  host: "127.0.0.1"
+  # API 目前僅信任本機 reverse proxy 傳入的 X-Forwarded-For。
+  trusted_proxies: ["127.0.0.1", "::1"]
+  port:
+    apis_http: "17801"
+sign:
+  # 簽章鹽
+  salt: "demo-local-salt"
+log:
+  # 系統log
+  sys_log: "info"
+  # 服務log
+  ap_log: "debug"
+  # request access log
+  access_log: "info"
+  # gin log
+  gin_log_enable: "true"
+cache:
+  # 預設過期秒數
+  default_expiration: 30
+
+auth:
+  # 會員 token 有效時間 min
+  member_token_expiration: 60
+  # 會員安全碼 token 有效時間 min
+  member_security_passwd_token_expiration: 10
+  # 會員忘記安全密碼時修改密碼用 token 有效時間 min
+  member_forget_security_passwd_token_expiration: 10
+  # 登入失敗計數視窗與防暴力破解限制。
+  member_login_attempt_window_sec: 300
+  member_login_account_max_attempts: 5
+  member_login_ip_max_attempts: 30
+  # 累積失敗達此值後，下一次登入必須通過 captcha。
+  member_login_captcha_after_attempts: 3
+  # 限制同一個 API instance 同時執行 Argon2，避免記憶體尖峰。
+  member_login_max_concurrent_hashes: 4
+  # 註冊即使關閉 captcha 仍會使用 Redis 進行 IP/device 限流。
+  member_registration_attempt_window_sec: 3600
+  member_registration_ip_max_attempts: 20
+  member_registration_device_max_attempts: 5
+
+pyroscope:
+  enable: "false"
+  host: "http://localhost:4040"
+  application_name: "zqb-apis"
+
+observability:
+  readiness_timeout_ms: 1000
+  tracing:
+    enable: true
+    service_name: "wallet-api"
+    sample_ratio: 1.0
+    # 正式環境可設 OTEL_EXPORTER_OTLP_TRACES_ENDPOINT，例如 http://otel-collector:4318/v1/traces。
+    otlp_http_endpoint: ""
+blacklist:
+  login_name: []
+  simulator_enable: "false"
+captcha:
+  geetest:
+    enable: "false"
+    id: ""
+    key: ""
+    salt: ""
+    by_pass_cycle_time_sec: 30
+
+database:
+  slave_switch: "true"

@@ -1,0 +1,17 @@
+*.exe
+*.log
+*.pid
+*.pem
+*.key
+.env
+.env.*
+!.env.example
+.vscode/
+.idea/
+.DS_Store
+coverage.out
+coverage.out.tmp
+cmd/zqbapis/zqbapis
+api/
+bin/
+dist/

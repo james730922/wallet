@@ -1,0 +1,4 @@
+*.exe
+coverage.out.tmp
+.vscode/
+.idea/

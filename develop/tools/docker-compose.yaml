@@ -1,0 +1,27 @@
+# docker-compose.yaml
+version: "3"
+services:
+  redis:
+    image: redis:5.0.5-alpine
+    container_name: zqb-redis
+    command: redis-server /etc/redis.conf
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/redis.conf:/etc/redis.conf
+  mysql:
+    image: mysql:5.7
+    container_name: zqb-mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci --skip_character_set_client_handshake --default_time_zone='+0:00'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: demo_password
+      MYSQL_DATABASE: zqb
+    ports:
+      - "3306:3306"
+    volumes:
+      - zqb_data_volume:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro
+volumes:
+  zqb_data_volume:

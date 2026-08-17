@@ -1,0 +1,10 @@
+version: '3.3'
+services:
+  zqb_apis:
+    image: zqb-apis:demo
+    # 設定對應的環境
+    command: "-env=dev"
+    container_name: zqb-apis
+    restart: always
+    ports:
+      - 17801:17801
